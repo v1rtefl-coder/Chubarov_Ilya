@@ -18,5 +18,16 @@ from src.masks.masks import get_mask_card_number, get_mask_account
 ```
 from src.processing.processing import filter_by_state, sort_by_date
 ```
-feature/homework_10_1
- develop
+# Тесты
+## Обзор тестирования
+Проект включает комплексные тесты, покрывающие все основные модули и функции. 
+Тесты написаны с использованием библиотеки `pytest`
+## Установка зависимостей для тестирования
+### Установка pytest
+```
+pip install pytest
+```
+### Или установка всех зависимостей из requirements.txt
+```
+pip install -r requirements-test.txt
+```
