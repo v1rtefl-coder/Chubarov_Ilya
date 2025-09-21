@@ -101,5 +101,3 @@ def test_sort_and_filter_integration(sample_transactions):
     assert len(filtered) == 3
     assert all(item["state"] == "EXECUTED" for item in filtered)
     assert [item["id"] for item in filtered] == [5, 1, 3]  # По возрастанию даты
-
-

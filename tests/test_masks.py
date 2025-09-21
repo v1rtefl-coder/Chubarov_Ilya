@@ -2,8 +2,7 @@ import pytest
 from src.masks import get_mask_card_number, get_mask_account
 
 
-
- #Параметризованные тесты для get_mask_card_number
+# Параметризованные тесты для get_mask_card_number
 @pytest.mark.parametrize("card_number, expected", [
     ("4111111111111111", "4111 11** **** 1111"),
     ("5500000000000004", "5500 00** **** 0004"),
@@ -12,12 +11,12 @@ def test_get_mask_card_number_various_formats(card_number, expected):
     """Тестирование маскирования """
     assert get_mask_card_number(card_number) == expected
 
+
 @pytest.mark.parametrize("invalid_input", [
     "",
     "123",
     "abcd1234efgh5678",
     "1234!@#$5678%^&*",
-
 ])
 def test_get_mask_card_number_invalid_input(invalid_input):
     """Тестирование обработки невалидных входных данных для карт"""
@@ -38,13 +37,13 @@ def test_get_mask_account_various_formats(account_number, expected):
     """Тестирование маскирования различных форматов счетов"""
     assert get_mask_account(account_number) == expected
 
+
 @pytest.mark.parametrize("invalid_input", [
     "",
     "     ",
     "123",
     "abcd",
     "123!@#",
-
 ])
 def test_get_mask_account_invalid_input(invalid_input):
     """Тестирование обработки невалидных входных данных для счетов"""
