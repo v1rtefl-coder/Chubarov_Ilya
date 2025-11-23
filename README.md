@@ -31,3 +31,29 @@ pip install pytest
 ```
 pip install -r requirements-test.txt
 ```
+# Финансовые операции
+Проект для обработки финансовых операций из различных форматов файлов.
+Поддержка чтения csv и excel файлов
+## Установка и использование
+1. Клонирование репозитория
+```
+git clone <repository-url>
+```
+2. Установка зависимостей
+```
+pip install -r requirements.txt
+```
+3. Использование в коде
+```
+from src.csv_operations import reading_transactions_csv
+from src.excel_operations import reading_transactions_excel
+
+# Чтение из CSV
+csv_data = reading_transactions_csv('data/transactions.csv')
+
+# Чтение из Excel
+excel_data = reading_transactions_excel('data/transactions.xlsx')
+
+print(f"CSV транзакций: {len(csv_data)}")
+print(f"Excel транзакций: {len(excel_data)}")
+```
