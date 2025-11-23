@@ -1,4 +1,5 @@
 import pytest
+from typing import List, Dict, Any
 
 
 # Фикстуры для модуля masks
@@ -107,4 +108,80 @@ def transactions_with_special_values():
         {"id": 2, "state": None, "date": "2023-10-14T10:15:30.654321", "amount": "200.00"},
         {"id": 3, "state": "EXECUTED", "date": "2023-10-16T08:45:12.987654", "amount": "150.00"},
         {"id": 4, "state": 123, "date": "2023-10-13T16:20:18.456789", "amount": "300.00"}
+    ]
+
+
+# Фикстуры для модуля generators
+@pytest.fixture
+def sample_transactions_list():
+    """Фикстура с транзакциями, включая описания."""
+    return [
+        {
+            "id": 1,
+            "state": "EXECUTED",
+            "amount": "100.00",
+            "date": "2023-10-15T12:30:45.123456",
+            "description": "Перевод организации"  # ← Добавлено
+        },
+        {
+            "id": 2,
+            "state": "EXECUTED",
+            "amount": "200.00",
+            "date": "2023-10-14T10:20:30.456789",
+            "description": "Перевод с карты на карту"  # ← Добавлено
+        },
+        {
+            "id": 3,
+            "state": "PENDING",
+            "amount": "300.00",
+            "date": "2023-10-13T08:15:20.789123",
+            "description": "Оплата услуг"  # ← Добавлено
+        },
+        {
+            "id": 4,
+            "state": "EXECUTED",
+            "amount": "400.00",
+            "date": "2023-10-12T16:45:10.123456",
+            "description": "Перевод со счета на счет"  # ← Добавлено
+        },
+        {
+            "id": 5,
+            "state": "EXECUTED",
+            "amount": "500.00",
+            "date": "2023-10-11T14:22:33.789123",
+            "description": "Пополнение счета"  # ← Добавлено
+        },
+        {
+            "id": 6,
+            "state": "FAILED",
+            "amount": "600.00",
+            "date": "2023-10-10T11:33:44.567890",
+            "description": "Снятие наличных"  # ← Добавлено
+        }
+    ]
+
+
+@pytest.fixture
+def empty_transactions() -> List[Dict[str, Any]]:
+    """Фикстура с пустым списком транзакций."""
+    return []
+
+
+@pytest.fixture
+def transactions_without_currency() -> List[Dict[str, Any]]:
+    """Фикстура с транзакциями без информации о валюте."""
+    return [
+        {
+            "id": 1,
+            "state": "EXECUTED",
+            "description": "Перевод"
+        },
+        {
+            "id": 2,
+            "state": "EXECUTED",
+            "operationAmount": {
+                "amount": "100.0"
+            },
+            "description": "Оплата"
+        }
     ]
