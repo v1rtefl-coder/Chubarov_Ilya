@@ -1,4 +1,5 @@
 import pytest
+from typing import List, Dict, Any
 
 
 # Фикстуры для модуля masks
@@ -110,6 +111,7 @@ def transactions_with_special_values():
     ]
 
 
+
 @pytest.fixture
 def sample_data():
     """Фикстура с тестовыми данными."""
@@ -120,10 +122,59 @@ def sample_data():
         {"id": 4, "amount": 75.30, "description": "Starbucks coffee and snacks", "date": "2024-01-18"},
         {"id": 5, "amount": 1200.00, "description": "Monthly rent payment", "date": "2024-01-19"},
         {"id": 6, "amount": 50.00, "description": "Netflix subscription payment", "date": "2024-01-20"},
-    ]
+
+# Фикстуры для модуля generators
+@pytest.fixture
+def sample_transactions_list():
+    """Фикстура с транзакциями, включая описания."""
+    return [
+        {
+            "id": 1,
+            "state": "EXECUTED",
+            "amount": "100.00",
+            "date": "2023-10-15T12:30:45.123456",
+            "description": "Перевод организации"  # ← Добавлено
+        },
+        {
+            "id": 2,
+            "state": "EXECUTED",
+            "amount": "200.00",
+            "date": "2023-10-14T10:20:30.456789",
+            "description": "Перевод с карты на карту"  # ← Добавлено
+        },
+        {
+            "id": 3,
+            "state": "PENDING",
+            "amount": "300.00",
+            "date": "2023-10-13T08:15:20.789123",
+            "description": "Оплата услуг"  # ← Добавлено
+        },
+        {
+            "id": 4,
+            "state": "EXECUTED",
+            "amount": "400.00",
+            "date": "2023-10-12T16:45:10.123456",
+            "description": "Перевод со счета на счет"  # ← Добавлено
+        },
+        {
+            "id": 5,
+            "state": "EXECUTED",
+            "amount": "500.00",
+            "date": "2023-10-11T14:22:33.789123",
+            "description": "Пополнение счета"  # ← Добавлено
+        },
+        {
+            "id": 6,
+            "state": "FAILED",
+            "amount": "600.00",
+            "date": "2023-10-10T11:33:44.567890",
+            "description": "Снятие наличных"  # ← Добавлено
+        }
+ ]
 
 
 @pytest.fixture
+
 def bank_transactions():
     """Фикстура с тестовыми транзакциями для функции process_bank_operations."""
     return [
@@ -137,4 +188,27 @@ def bank_transactions():
         {"id": 8, "description": "Покупка продуктов в Магните", "amount": -2800, "date": "2024-01-24"},
         {"id": 9, "description": "Оплата интернета от Ростелеком", "amount": -1000, "date": "2024-01-23"},
         {"id": 10, "description": "Такси Яндекс.Такси до работы", "amount": -450, "date": "2024-01-22"},
-    ]
+
+def empty_transactions() -> List[Dict[str, Any]]:
+    """Фикстура с пустым списком транзакций."""
+    return []
+
+
+@pytest.fixture
+def transactions_without_currency() -> List[Dict[str, Any]]:
+    """Фикстура с транзакциями без информации о валюте."""
+    return [
+        {
+            "id": 1,
+            "state": "EXECUTED",
+            "description": "Перевод"
+        },
+        {
+            "id": 2,
+            "state": "EXECUTED",
+            "operationAmount": {
+                "amount": "100.0"
+            },
+            "description": "Оплата"
+        }
+ ]
