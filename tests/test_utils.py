@@ -3,10 +3,9 @@ from unittest.mock import mock_open, patch
 import json
 import os
 import sys
+from utils import load_transactions
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
-
-from utils import load_transactions
 
 
 class TestLoadTransactions(unittest.TestCase):

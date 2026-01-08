@@ -111,6 +111,18 @@ def transactions_with_special_values():
     ]
 
 
+
+@pytest.fixture
+def sample_data():
+    """Фикстура с тестовыми данными."""
+    return [
+        {"id": 1, "amount": 100.50, "description": "Payment for groceries at Walmart", "date": "2024-01-15"},
+        {"id": 2, "amount": 45.00, "description": "Uber ride to airport", "date": "2024-01-16"},
+        {"id": 3, "amount": 200.00, "description": "Amazon purchase - electronics", "date": "2024-01-17"},
+        {"id": 4, "amount": 75.30, "description": "Starbucks coffee and snacks", "date": "2024-01-18"},
+        {"id": 5, "amount": 1200.00, "description": "Monthly rent payment", "date": "2024-01-19"},
+        {"id": 6, "amount": 50.00, "description": "Netflix subscription payment", "date": "2024-01-20"},
+
 # Фикстуры для модуля generators
 @pytest.fixture
 def sample_transactions_list():
@@ -158,10 +170,25 @@ def sample_transactions_list():
             "date": "2023-10-10T11:33:44.567890",
             "description": "Снятие наличных"  # ← Добавлено
         }
-    ]
+ ]
 
 
 @pytest.fixture
+
+def bank_transactions():
+    """Фикстура с тестовыми транзакциями для функции process_bank_operations."""
+    return [
+        {"id": 1, "description": "Зарплата за январь 2024", "amount": 50000, "date": "2024-01-31"},
+        {"id": 2, "description": "Оплата кредита в Сбербанке", "amount": -15000, "date": "2024-01-30"},
+        {"id": 3, "description": "Покупка в супермаркете Пятерочка", "amount": -3500, "date": "2024-01-29"},
+        {"id": 4, "description": "Перевод другу на карту Тинькофф", "amount": -5000, "date": "2024-01-28"},
+        {"id": 5, "description": "Оплата услуг ЖКХ", "amount": -8000, "date": "2024-01-27"},
+        {"id": 6, "description": "Заправка автомобиля на Лукойл", "amount": -3000, "date": "2024-01-26"},
+        {"id": 7, "description": "Премия за успешный проект", "amount": 25000, "date": "2024-01-25"},
+        {"id": 8, "description": "Покупка продуктов в Магните", "amount": -2800, "date": "2024-01-24"},
+        {"id": 9, "description": "Оплата интернета от Ростелеком", "amount": -1000, "date": "2024-01-23"},
+        {"id": 10, "description": "Такси Яндекс.Такси до работы", "amount": -450, "date": "2024-01-22"},
+
 def empty_transactions() -> List[Dict[str, Any]]:
     """Фикстура с пустым списком транзакций."""
     return []
@@ -184,4 +211,4 @@ def transactions_without_currency() -> List[Dict[str, Any]]:
             },
             "description": "Оплата"
         }
-    ]
+ ]

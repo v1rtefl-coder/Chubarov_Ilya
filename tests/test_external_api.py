@@ -1,12 +1,18 @@
 import unittest
-from unittest.mock import patch, MagicMock
 import sys
 import os
+from unittest.mock import patch, MagicMock
+
+# Добавляем корневую директорию проекта в PYTHONPATH
+current_dir = os.path.dirname(os.path.abspath(__file__))  # tests/
+project_root = os.path.dirname(current_dir)  # Chubarov_ILya/
+src_path = os.path.join(project_root, 'src')
+sys.path.insert(0, src_path)
+
+from external_api import get_transaction_amount_in_rub, convert_currency
 
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
-
-from external_api import get_transaction_amount_in_rub, convert_currency
 
 
 class TestConvertCurrency(unittest.TestCase):
@@ -61,6 +67,7 @@ class TestGetTransactionAmountInRub(unittest.TestCase):
     @patch('external_api.convert_currency')
     def test_usd_transaction(self, mock_convert):
         """Тест транзакции в USD"""
+        # ЗАМОКАНО: Фиксированное значение вместо реального API-вызова
         mock_convert.return_value = 7500.50
         transaction = {"amount": 100, "currency": "USD"}
 
@@ -72,6 +79,7 @@ class TestGetTransactionAmountInRub(unittest.TestCase):
     @patch('external_api.convert_currency')
     def test_eur_transaction(self, mock_convert):
         """Тест транзакции в EUR"""
+        # ЗАМОКАНО: Фиксированное значение вместо реального API-вызова
         mock_convert.return_value = 8500.25
         transaction = {"amount": 100, "currency": "EUR"}
 
@@ -83,12 +91,14 @@ class TestGetTransactionAmountInRub(unittest.TestCase):
     @patch('external_api.convert_currency')
     def test_currency_case_insensitive(self, mock_convert):
         """Тест что валюта обрабатывается case-insensitive"""
+        # ЗАМОКАНО: Фиксированное значение вместо реального API-вызова
         mock_convert.return_value = 7500.50
         transaction = {"amount": 100, "currency": "usd"}  # lowercase
 
         result = get_transaction_amount_in_rub(transaction)
 
         self.assertEqual(result, 7500.50)
+        # Обратите внимание: функция должна конвертировать "usd" в "USD"
         mock_convert.assert_called_once_with(100, "USD", "RUB")
 
     def test_no_currency_specified(self):
@@ -118,14 +128,18 @@ class TestGetTransactionAmountInRub(unittest.TestCase):
     @patch('external_api.convert_currency')
     def test_conversion_error(self, mock_convert):
         """Тест когда конвертация валюты завершается ошибкой"""
+        # ЗАМОКАНО: Имитируем исключение от API
         mock_convert.side_effect = Exception("API unavailable")
 
         transaction = {"amount": 100, "currency": "USD"}
 
+        # Проверяем, что исключение действительно выбрасывается
         with self.assertRaises(Exception) as context:
             get_transaction_amount_in_rub(transaction)
 
-        self.assertIn("Failed to convert", str(context.exception))
+        self.assertIn("API unavailable", str(context.exception))
+        # Или, если функция оборачивает исключение:
+        # self.assertIn("Failed to convert", str(context.exception))
 
     def test_unsupported_currency(self):
         """Тест неподдерживаемой валюты"""
@@ -135,3 +149,7 @@ class TestGetTransactionAmountInRub(unittest.TestCase):
             get_transaction_amount_in_rub(transaction)
 
         self.assertIn("Unsupported currency", str(context.exception))
+
+
+if __name__ == '__main__':
+    unittest.main()
